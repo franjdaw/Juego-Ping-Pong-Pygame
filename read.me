@@ -1,0 +1,67 @@
+Pong con Python y Pygame
+
+Este proyecto es una versión del clásico juego Pong, implementada en Python usando la librería Pygame. Además de ser un juego funcional, el objetivo principal es demostrar los principios de la Programación Orientada a Objetos (POO): encapsulamiento, herencia y polimorfismo. El juego también incluye música de fondo que se reproduce durante la partida.
+
+Características
+
+- Juego de Pong para dos jugadores
+
+- Música de fondo reproducida en bucle
+
+- Pantallas de inicio, juego y victoria
+
+Uso de POO:
+
+- Encapsulamiento: Cada clase gestiona sus propios atributos y métodos, como Jugador y Pelota, evitando que otras partes del código modifiquen sus datos directamente.
+
+- Herencia: La clase Entidad sirve como base para Jugador y Pelota, compartiendo atributos comunes como la posición en la pantalla.
+
+- Polimorfismo: Tanto Jugador como Pelota implementan el método dibujar(), pero cada uno lo hace de manera diferente. La clase Juego los dibuja a todos sin distinguir su tipo.
+
+- Código modular y fácil de mantener o ampliar
+
+
+Archivos principales
+
+- main.py: Inicializa Pygame y ejecuta el juego
+
+- juego.py: Contiene la clase Juego que gestiona eventos, estados y renderizado
+
+- jugador.py: Define la clase Jugador con métodos para mover y dibujar la pala
+
+- pelota.py: Define la clase Pelota con métodos para moverse, detectar rebotes y dibujarse
+
+- entidad.py: Clase base Entidad de la que heredan Jugador y Pelota
+
+- musica.mp3: Archivo de música de fondo
+
+
+Requisitos
+
+
+Python 3.x
+
+Pygame (instalable con pip install pygame)
+
+
+Cómo ejecutar
+
+Clona el repositorio:
+git clone https://github.com/tu-usuario/pong-python.git
+
+
+Asegúrate de que todos los archivos .py y musica.mp3 estén en la misma carpeta.
+
+Instala Pygame si no lo tienes:
+pip install pygame
+
+Ejecuta el juego:
+python main.py
+
+Controles:
+
+Pulsa SPACE para iniciar la partida
+
+Jugador 1: W y S
+
+Jugador 2: Flechas UP y DOWN

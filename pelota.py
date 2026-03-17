@@ -15,7 +15,14 @@ class Pelota(Entidad):
         self.y += self.vel_y
 
     def dibujar(self, pantalla):
+        # Sombra
+        pygame.draw.circle(pantalla, (10,10,20), (int(self.x + 2), int(self.y + 2)), self.radio + 2)
+        # Brillo exterior
+        pygame.draw.circle(pantalla, (150,150,180), (int(self.x), int(self.y)), self.radio + 1)
+        # Principal
         pygame.draw.circle(pantalla, (255,255,255), (int(self.x), int(self.y)), self.radio)
+        # Brillo central
+        pygame.draw.circle(pantalla, (255,255,255), (int(self.x - 3), int(self.y - 3)), 3)
 
     def rebote_pared(self, alto):
         if self.y <= 0 or self.y >= alto:
