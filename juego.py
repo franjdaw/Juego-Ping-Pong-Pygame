@@ -14,7 +14,7 @@ class Juego:
         self.ancho = ancho
         self.alto = alto
         self.reloj = pygame.time.Clock()
-        self.fps = 60
+        self.fps = 70
         
         # Cargar fuente personalizada
         try:
