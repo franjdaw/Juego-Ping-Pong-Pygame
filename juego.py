@@ -219,8 +219,13 @@ class Juego:
         sombra_color = (50, 50, 50)
         marcador_sombra = self.fuente_grande.render(f"{self.puntos1} - {self.puntos2}", True, sombra_color)
         marcador = self.fuente_grande.render(f"{self.puntos1} - {self.puntos2}", True, (255, 255, 255))
-        self.pantalla.blit(marcador_sombra, (self.ancho//2 - 40 + sombra_offset, 20 + sombra_offset))
-        self.pantalla.blit(marcador, (self.ancho//2 - 40, 20))
+        
+        # Centrar el marcador perfectamente
+        marcador_rect = marcador.get_rect(center=(self.ancho//2, 40))
+        sombra_rect = marcador_sombra.get_rect(center=(self.ancho//2 + sombra_offset, 40 + sombra_offset))
+        
+        self.pantalla.blit(marcador_sombra, sombra_rect)
+        self.pantalla.blit(marcador, marcador_rect)
 
         # Sistema de vidas con efecto de sombra
         vidas1_sombra = self.fuente_pequena.render(f"Vidas: {self.vidas1}", True, sombra_color)
@@ -228,10 +233,16 @@ class Juego:
         vidas1_texto = self.fuente_pequena.render(f"Vidas: {self.vidas1}", True, (255, 120, 120))
         vidas2_texto = self.fuente_pequena.render(f"Vidas: {self.vidas2}", True, (120, 170, 255))
         
-        self.pantalla.blit(vidas1_sombra, (20 + sombra_offset, 80 + sombra_offset))
-        self.pantalla.blit(vidas2_sombra, (self.ancho - 100 + sombra_offset, 80 + sombra_offset))
-        self.pantalla.blit(vidas1_texto, (20, 80))
-        self.pantalla.blit(vidas2_texto, (self.ancho - 100, 80))
+        # Posicionar vidas mejor para 1280x720
+        vidas1_rect = vidas1_texto.get_rect(topleft=(50, 100))
+        vidas2_rect = vidas2_texto.get_rect(topright=(self.ancho - 50, 100))
+        sombra1_rect = vidas1_sombra.get_rect(topleft=(50 + sombra_offset, 100 + sombra_offset))
+        sombra2_rect = vidas2_sombra.get_rect(topright=(self.ancho - 50 + sombra_offset, 100 + sombra_offset))
+        
+        self.pantalla.blit(vidas1_sombra, sombra1_rect)
+        self.pantalla.blit(vidas2_sombra, sombra2_rect)
+        self.pantalla.blit(vidas1_texto, vidas1_rect)
+        self.pantalla.blit(vidas2_texto, vidas2_rect)
 
         pygame.display.flip()
     
