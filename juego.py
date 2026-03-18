@@ -187,12 +187,16 @@ class Juego:
             self.entidades.append(self.pelota)
 
     def dibujar(self):
-        # Fondo simple
-        self.pantalla.fill((20, 20, 30))
+        # Fondo moderno con gradiente
+        self._dibujar_fondo_moderno()
         
-        # Línea central simple
-        pygame.draw.line(self.pantalla, (100, 100, 100), 
-                        (self.ancho//2, 0), (self.ancho//2, self.alto), 2)
+        # Línea central con efecto brillante
+        for i in range(3):
+            alpha = 255 - i * 80
+            color = (100 + i * 50, 100 + i * 50, 100 + i * 50)
+            pygame.draw.line(self.pantalla, color, 
+                           (self.ancho//2 + i - 1, 0), 
+                           (self.ancho//2 + i - 1, self.alto), 1)
 
         # Dibujar obstáculos
         for obstaculo in self.obstaculos:
@@ -210,17 +214,42 @@ class Juego:
             else:
                 entidad.dibujar(self.pantalla)
 
-        # Marcador con fuente personalizada
+        # Marcador con fuente personalizada y efecto de sombra
+        sombra_offset = 2
+        sombra_color = (50, 50, 50)
+        marcador_sombra = self.fuente_grande.render(f"{self.puntos1} - {self.puntos2}", True, sombra_color)
         marcador = self.fuente_grande.render(f"{self.puntos1} - {self.puntos2}", True, (255, 255, 255))
+        self.pantalla.blit(marcador_sombra, (self.ancho//2 - 40 + sombra_offset, 20 + sombra_offset))
         self.pantalla.blit(marcador, (self.ancho//2 - 40, 20))
 
-        # Sistema de vidas con fuente personalizada
+        # Sistema de vidas con efecto de sombra
+        vidas1_sombra = self.fuente_pequena.render(f"Vidas: {self.vidas1}", True, sombra_color)
+        vidas2_sombra = self.fuente_pequena.render(f"Vidas: {self.vidas2}", True, sombra_color)
         vidas1_texto = self.fuente_pequena.render(f"Vidas: {self.vidas1}", True, (255, 120, 120))
         vidas2_texto = self.fuente_pequena.render(f"Vidas: {self.vidas2}", True, (120, 170, 255))
+        
+        self.pantalla.blit(vidas1_sombra, (20 + sombra_offset, 80 + sombra_offset))
+        self.pantalla.blit(vidas2_sombra, (self.ancho - 100 + sombra_offset, 80 + sombra_offset))
         self.pantalla.blit(vidas1_texto, (20, 80))
         self.pantalla.blit(vidas2_texto, (self.ancho - 100, 80))
 
         pygame.display.flip()
+    
+    def _dibujar_fondo_moderno(self):
+        # Gradiente simple
+        for y in range(0, self.alto, 10):
+            color_ratio = y / self.alto
+            r = int(20 + color_ratio * 15)
+            g = int(20 + color_ratio * 20)
+            b = int(30 + color_ratio * 25)
+            pygame.draw.rect(self.pantalla, (r, g, b), (0, y, self.ancho, 10))
+        
+        # Estrellas simples
+        if not hasattr(self, '_estrellas'):
+            self._estrellas = [(random.randint(0, self.ancho), random.randint(0, self.alto)) for _ in range(20)]
+        
+        for x, y in self._estrellas:
+            pygame.draw.circle(self.pantalla, (150, 150, 200), (x, y), 1)
 
     def dibujar_intro(self):
         self.pantalla.fill((20, 20, 30))
